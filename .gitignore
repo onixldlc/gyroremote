@@ -1,0 +1,37 @@
+# Gradle
+.gradle/
+build/
+keystore/
+local.properties
+
+# Kotlin
+.kotlin/
+
+# Build output (README mounts ./build as the APK drop dir)
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Debug signing keystore (build.sh symlinks $HOME/.android here so the key
+# survives --rm). Ignored by default because it holds private key material —
+# worthless for a debug key, but adbkey lives here too.
+# To share one stable debug identity across machines/CI, swap these two lines for:
+#   keystore/*
+#   !keystore/debug.keystore
+keystore/
+
+# Release keystores — never commit these
+*.jks
+*.keystore
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS cruft
+.DS_Store
+Thumbs.db

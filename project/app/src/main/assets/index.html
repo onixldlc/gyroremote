@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<style>
+  body { margin:0; font-family:system-ui,sans-serif; background:#111; color:#eee; overflow:hidden; height:100vh; }
+  .panels { display:flex; gap:16px; padding:12px; }
+  .panel { flex:1; background:#1c1c1c; border-radius:8px; padding:12px; }
+  .panel h3 { margin:0 0 8px; font-size:14px; color:#8ab4f8; }
+  .row { display:flex; justify-content:space-between; font-family:ui-monospace,monospace; font-size:13px; padding:2px 0; }
+  .row span:last-child { color:#a0e0a0; }
+  #stage { position:absolute; inset:120px 0 0; }
+  #dot { position:absolute; width:24px; height:24px; border-radius:50%;
+         background:#8ab4f8; box-shadow:0 0 20px #8ab4f8; transform:translate(-50%,-50%); }
+</style>
+</head>
+<body>
+  <div class="panels">
+    <div class="panel">
+      <h3>Rotation Vector (deg)</h3>
+      <div class="row"><span>yaw</span><span id="yaw">–</span></div>
+      <div class="row"><span>pitch</span><span id="pitch">–</span></div>
+      <div class="row"><span>roll</span><span id="roll">–</span></div>
+    </div>
+    <div class="panel">
+      <h3>Gyroscope (rad/s)</h3>
+      <div class="row"><span>x</span><span id="gx">–</span></div>
+      <div class="row"><span>y</span><span id="gy">–</span></div>
+      <div class="row"><span>z</span><span id="gz">–</span></div>
+    </div>
+  </div>
+  <div id="stage"><div id="dot"></div></div>
+
+<script>
+  const fmt = n => n.toFixed(2).padStart(7);
+  const dot = document.getElementById('dot');
+  const stage = document.getElementById('stage');
+
+  window.onSensor = (data) => {
+    document.getElementById('yaw').textContent   = fmt(data.rot.yaw);
+    document.getElementById('pitch').textContent = fmt(data.rot.pitch);
+    document.getElementById('roll').textContent  = fmt(data.rot.roll);
+    document.getElementById('gx').textContent    = fmt(data.gyro.x);
+    document.getElementById('gy').textContent    = fmt(data.gyro.y);
+    document.getElementById('gz').textContent    = fmt(data.gyro.z);
+
+    const w = stage.clientWidth, h = stage.clientHeight;
+    const x = ((data.rot.yaw   + 180) / 360) * w;
+    const y = ((data.rot.pitch +  90) / 180) * h;
+    dot.style.left = x + 'px';
+    dot.style.top  = y + 'px';
+  };
+
+  window.AndroidReady && window.AndroidReady.ready();
+</script>
+</body>
+</html>
