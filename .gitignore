@@ -1,7 +1,6 @@
 # Gradle
 .gradle/
 build/
-keystore/
 local.properties
 
 # Kotlin
@@ -35,3 +34,6 @@ captures/
 # OS cruft
 .DS_Store
 Thumbs.db
+
+# other
+.reference/
